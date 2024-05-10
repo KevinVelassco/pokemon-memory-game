@@ -32,7 +32,7 @@ const emit = defineEmits<{
 const changeLevel = (level: string) => {
   Swal.fire({
     title: 'Deseas cambiar de nivel?',
-    text: 'Si aceptas se inciará una nueva partida!',
+    text: 'Si aceptas se iniciará una nueva partida!',
     icon: 'question',
     showCancelButton: true,
     confirmButtonText: 'Aceptar',

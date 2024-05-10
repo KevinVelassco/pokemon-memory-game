@@ -48,7 +48,18 @@ export const usePokemonMemoryGame = () => {
   const currentLives = ref(gameSettings.value.numberOfLives);
 
   const getPokemos = async (): Promise<Pokemon[]> => {
-    const { data } = await pokemonApi.get<PokemonListResponse>('/?limit=200');
+    const pokemonsWithSvg = 649;
+    let limit = 100;
+
+    const pages = Math.floor(pokemonsWithSvg / limit);
+
+    const randomPage = Math.floor(Math.random() * pages);
+
+    const offset = randomPage * limit;
+
+    limit = randomPage === pages - 1 ? pokemonsWithSvg - offset : limit;
+
+    const { data } = await pokemonApi.get<PokemonListResponse>(`/?limit=${limit}&offset=${offset}`);
 
     const pokemons = data.results.map((pokemon) => {
       const urlParts = pokemon.url?.split('/');
@@ -72,7 +83,7 @@ export const usePokemonMemoryGame = () => {
     numberOfCorrectAnswers.value = 0;
     numberOfWinsWithoutLosing.value = 0;
 
-    const randomStart = Math.floor(Math.random() * 120);
+    const randomStart = Math.floor(Math.random() * 60);
 
     const { rows, columns } = gameSettings.value;
 
